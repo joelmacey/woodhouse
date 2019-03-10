@@ -1,0 +1,16 @@
+{
+  "name": "aws-nodejs",
+  "description": "",
+  "version": "0.1.0",
+  "dependencies": {
+    "ask-sdk-core": "^2.0.0",
+    "ask-sdk-model": "^1.0.0",
+    "dotenv": "^6.2.0",
+    "google-searcher": "^1.0.0",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "serverless-alexa-skills": "^0.1.0",
+    "serverless-dotenv-plugin": "^2.0.1"
+  }
+}

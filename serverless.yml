@@ -1,0 +1,94 @@
+service: woodhouse-assistant
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  region: us-east-1
+  iamRoleStatements:
+   - Effect: "Allow"
+     Action:
+       - "dynamodb:PutItem"
+     Resource: { "Fn::GetAtt": ["woodhouseTable", "Arn" ] }
+
+custom:
+  alexa:
+    vendorId: ${env:AMAZON_VENDOR_ID}
+    clientId: ${env:AMAZON_CLIENT_ID}
+    clientSecret: ${env:AMAZON_CLIENT_SECRET}
+    skills:
+      - id: ${env:ALEXA_SKILL_ID}
+        manifest:
+          apis:
+            custom:
+              endpoint:
+                uri: >-
+                  { "Fn::GetAtt": ["woodhouse", "Arn" ] }
+          manifestVersion: '1.0'
+          permissions: []
+          privacyAndCompliance:
+            allowsPurchases: false
+            usesPersonalInfo: false
+            isChildDirected: false
+            isExportCompliant: true
+          publishingInformation:
+            locales:
+              en-US:
+                name: woodhouse
+                summary: woodhouse
+                description: Woodhouse is a skill that finds your favourite sites and opens them for you.
+                examplePhrases:
+                  - Alexa ask woodhouse to find {query}
+                  - Alexa ask woodhouse to open {query}
+                  - help
+            isAvailableWorldwide: true
+            testingInstructions: NA
+            category: BUSINESS_AND_FINANCE
+            distributionCountries: []
+        models:
+          en-US:
+            interactionModel:
+              languageModel:
+                invocationName: woodhouse
+                intents:
+                  - name: OpenIntent
+                    slots:
+                    - name: query
+                      type: AMAZON.SearchQuery
+                    samples:
+                     - 'I have {First} and {Second}'
+                     - 'show {query}'
+                     - 'show me {query}'
+                     - 'get {query}'
+                     - 'get me {query}'
+                     - 'load up {query}'
+                     - 'find {query}'
+                     - 'find me {query}'
+                     - 'search {query}'
+                     - 'search for {query}'
+package:
+#  include:
+#    - include-me.js
+#    - include-me-dir/**
+ exclude:
+   - client/**
+   # - resources/**
+
+functions:
+  woodhouse:
+    handler: handler.handler
+
+resources:
+  - ${file(resources/cognito-identity-pool.yml)}
+  - ${file(resources/dynamo.yml)}
+
+Outputs:
+  woodhouseTable:
+    Value:
+      Ref: TableName
+  IdentityPoolId:
+    Value:
+      Ref: CognitoIdentityPool
+
+plugins:
+  - serverless-alexa-skills
+  - serverless-dotenv-plugin
