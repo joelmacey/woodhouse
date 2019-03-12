@@ -71,48 +71,6 @@ will deploy your functions
 
 If you encounter any issues with deploying the alexa  please read more about the serverless alexa plugin [here](https://serverless.com/blog/how-to-manage-your-alexa-skills-with-serverless/)
 
-### Installing
-
-A step by step series of examples that tell you how to get a development env running
-
-Run
-```
-npm install
-```
-in order to install all dependencies required for local development
-
-### Linting
-
-Linting is handled by eslint using airbnb standards and can be run by
-```
-npm run lint
-```
-to show the faults in the code or
-
-```
-npm run lint-fix
-```
-to fix all faults found in the code
-
-### Testing
-
-Running
-```
-npm run test
-```
-Will run the chai tests that will ensure the function returns accurate results.
-
-### Deployment
-
-Deployment is handled by the serverless framework
-```
-sls deploy
-```
-will deploy your functions
-
-If you encounter any issues with deploying the alexa  please read more about the serverless alexa plugin [here](https://serverless.com/blog/how-to-manage-your-alexa-skills-with-serverless/)
-
-
 ## Chrome Extension
 
 ### Prerequisites
