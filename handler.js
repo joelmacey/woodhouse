@@ -5,7 +5,6 @@ const uuidv1 = require('uuid/v1');
 
 const dynamodb = new aws.DynamoDB();
 const dbTable = process.env.DYNAMDBTABLE;
-aws.config.update({ region: 'us-east-1' });
 
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
