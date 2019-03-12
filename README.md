@@ -23,12 +23,7 @@ For this project I used
 - NPM version 5.6.0
 - Serverless Framework version 1.25.0 (Due to issues with 1.32.0 and the serverless-alexa-skills)
 
-Please set all environment variables by copying and filling in the assocaited details if you have any issues getting ID's please read the tutorial [here](### Prerequisites
-
-For this project I used
-- Node version 8.10.0
-- NPM version 5.6.0
-- Serverless Framework version 1.25.0 (Due to issues with 1.32.0 and the serverless-alexa-skills)
+Please set all environment variables by copying and filling in the assocaited details if you have any issues getting ID's please read the tutorial [here](https://serverless.com/blog/how-to-manage-your-alexa-skills-with-serverless/)
 
 ### Installing
 
