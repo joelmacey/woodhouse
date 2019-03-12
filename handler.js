@@ -1,18 +1,18 @@
 const Alexa = require('ask-sdk-core');
-const aws      = require('aws-sdk');
-const GoogleSearch = require("google-searcher");
+const aws = require('aws-sdk');
+const GoogleSearch = require('google-searcher');
 const uuidv1 = require('uuid/v1');
-const dotenv = require('dotenv');
 
 const dynamodb = new aws.DynamoDB();
 const dbTable = process.env.DYNAMDBTABLE;
+aws.config.update({ region: 'us-east-1' });
 
 const LaunchRequestHandler = {
   canHandle(handlerInput) {
     return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
   },
   handle(handlerInput) {
-    const speechText = 'I am woodhouse, your personal browser helper ask me to open something!';
+    const speechText = '<voice name="Brian">I am woodhouse, your personal browser helper ask me to open something!</voice>';
 
     return handlerInput.responseBuilder
       .speak(speechText)
@@ -28,53 +28,52 @@ const OpenIntentHandler = {
     && handlerInput.requestEnvelope.request.intent.name === 'OpenIntent';
   },
   handle(handlerInput) {
-    var query = "";
-    var searchURL = "";
-    if (handlerInput.requestEnvelope.request.intent.slots.query.value && handlerInput.requestEnvelope.request.intent.slots.query.value !== "?") {
+    let query = '';
+    if (handlerInput.requestEnvelope.request.intent.slots.query.value && handlerInput.requestEnvelope.request.intent.slots.query.value !== '?') {
       query = handlerInput.requestEnvelope.request.intent.slots.query.value;
     }
     new GoogleSearch()
-    .host("www.google.com")
-    .lang("en")
-    .query(query)
-    .exec()
-    .then(results => {
-      searchURL = results[0]
-      var params = {
-        Item: {
-          "id": {
-            S: uuidv1()
-          },
-          "url": {
-            S: searchURL
-          },
-          "creationTime": {
-            N: Date.now().toString()
-          },
-          "ttl": {
-            N: (Date.now()+30).toString()
-          }
-        },
-        ReturnConsumedCapacity: "TOTAL",
-        TableName: dbTable
-      };
-      dynamodb.putItem(params, (err, data) => {
-        if (err) console.log(err, err.stack); // an error occurred
-        else     console.log(data);           // successful response
-      });
+      .host('www.google.com')
+      .lang('en')
+      .query(query)
+      .exec()
+      .then((results) => {
+        const resultURL = results[0];
 
-    });
+        const params = {
+          Item: {
+            id: {
+              S: uuidv1(),
+            },
+            url: {
+              S: resultURL,
+            },
+            creationTime: {
+              N: Date.now().toString(),
+            },
+            ttl: {
+              N: (Date.now() + 30).toString(),
+            },
+          },
+          ReturnConsumedCapacity: 'TOTAL',
+          TableName: dbTable,
+        };
+        dynamodb.putItem(params, (err, data) => {
+          if (err) console.log(err, err.stack); // an error occurred
+          else console.log(data); // successful response
+        });
+      });
     const speechText = `<voice name="Brian">Opening ${query} now</voice>`;
     return handlerInput.responseBuilder
-    .speak(speechText)
-    .withSimpleCard(speechText)
-    .getResponse();
+      .speak(speechText)
+      .withSimpleCard(speechText)
+      .getResponse();
   },
 };
 
-///////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////BORING HANDLERS BELOW/////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////
+// ///////////////////////////BORING HANDLERS BELOW/////////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////////////////////
 
 
 const HelpIntentHandler = {
@@ -83,12 +82,12 @@ const HelpIntentHandler = {
       && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent';
   },
   handle(handlerInput) {
-    const speechText = 'You can say hello to me!';
+    const speechText = 'Ask me to open something!';
 
     return handlerInput.responseBuilder
       .speak(speechText)
       .reprompt(speechText)
-      .withSimpleCard('Hello World', speechText)
+      .withSimpleCard(speechText)
       .getResponse();
   },
 };
@@ -104,7 +103,7 @@ const CancelAndStopIntentHandler = {
 
     return handlerInput.responseBuilder
       .speak(speechText)
-      .withSimpleCard('Hello World', speechText)
+      .withSimpleCard(speechText)
       .getResponse();
   },
 };
@@ -142,7 +141,7 @@ exports.handler = skillBuilder
     OpenIntentHandler,
     HelpIntentHandler,
     CancelAndStopIntentHandler,
-    SessionEndedRequestHandler
+    SessionEndedRequestHandler,
   )
   .addErrorHandlers(ErrorHandler)
   .lambda();
