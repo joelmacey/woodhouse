@@ -2,14 +2,14 @@ var region = 'us-east-1';
 
 AWS.config.region = region; // Region
 AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-    IdentityPoolId: 'us-east-1:c0b7ec27-911d-4944-85d3-fd4f551444ea', //Update this identity Pool ID with the one created
+    IdentityPoolId: 'us-east-1:19145b56-e674-4e9d-ac0c-0fa4406806c2',
 });
 AWS.config.credentials.get(function(err) {
   if (err) alert(err);
   // console.log(AWS.config.credentials);
 });
 var dynamodb = new AWS.DynamoDB();
-var dbTable = 'woodhouse-table'; // Change this if you used a different table name
+var dbTable = 'woodhouse-table';
 var params = {
   TableName: dbTable
 }
@@ -21,7 +21,7 @@ function myCallback() {
     else if(data.Items[0].id.S != 'undefined'){
       var id =data.Items[0].id.S;
       var url = data.Items[0].url.S;
-      console.log(url);           // successful response - Useful for debugging
+      console.log(url);           // successful response
       window.open(url, '_blank');
       var params = {
         Key: {
@@ -37,5 +37,4 @@ function myCallback() {
        });
     }
   });
-
 }

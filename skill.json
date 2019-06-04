@@ -1,0 +1,31 @@
+{
+  "manifest": {
+    "publishingInformation": {
+      "locales": {
+        "en-US": {
+          "summary": "Woodhouse opens up your favourite websites",
+          "examplePhrases": [
+            "Alexa ask woodhouse to find {query}",
+            "Alexa ask woodhouse to open {query}",
+            "help"
+          ],
+          "name": "woodhouse",
+          "description": "Woodhouse is a skill that finds your favourite sites and opens them for you."
+        }
+      },
+      "isAvailableWorldwide": true,
+      "testingInstructions": "Sample Testing Instructions.",
+      "category": "KNOWLEDGE_AND_TRIVIA",
+      "distributionCountries": []
+    },
+    "apis": {
+      "custom": {
+        "endpoint": {
+          "sourceDir": "lambda/custom",
+          "uri": "ask-custom-alexa-the-googler-default"
+        }
+      }
+    },
+    "manifestVersion": "1.0"
+  }
+}

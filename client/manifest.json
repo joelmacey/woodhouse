@@ -1,13 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "Woodhouse extension",
-  "options_ui": {
-    "page": "options.html",
-    "open_in_tab": false
-  },
-  "icons": { "16": "icon16.png",
-           "48": "icon48.png",
-          "128": "icon128.png" },
+  "name": "Woodhouse Extension",
   "version": "0.1",
   "permissions": [
 		"tabs",
@@ -19,5 +12,13 @@
       "aws-sdk.js",
       "index.js"
     ]
-  }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": ["index.js", "aws-sdk.js"]
+    }
+  ]
 }

@@ -1,0 +1,50 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "woodhouse",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "FightIntent",
+          "samples": [
+            "lets fights",
+            "to fight"
+          ]
+        },
+        {
+          "name": "OpenIntent",
+          "samples": [
+            "open {query}",
+            "show {query}",
+            "show me {query}",
+            "get {query}",
+            "get me {query}",
+            "load up {query}",
+            "find {query}",
+            "find me {query}",
+            "search {query}",
+            "search for {query}"
+          ],
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery",
+              "samples": []
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
